@@ -1,7 +1,6 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/database';
-import { getTasks } from './database/SQLite';
 import 'firebase/firestore';
 
 
@@ -23,24 +22,24 @@ if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 
-const db = firebase.firestore();
+// const db = firebase.firestore();
 
-export async function uploadDataToFirestore (){
-  try {
-    const tasks = await getTasks(); // Get tasks from SQLite
-    const tasksCollectionRef = db.collection('tasks');
+// export async function uploadDataToFirestore (){
+//   try {
+//     const tasks = await getTasks(); // Get tasks from SQLite
+//     const tasksCollectionRef = db.collection('tasks');
 
-    tasks.forEach(task => {
-      tasksCollectionRef.add(task); // Upload each task to Firestore
-    });
+//     tasks.forEach(task => {
+//       tasksCollectionRef.add(task); // Upload each task to Firestore
+//     });
 
-    console.log('Data uploaded to Firestore successfully');
-  } catch (error) {
-    console.error('Error uploading data to Firestore', error);
-  }
-};
+//     console.log('Data uploaded to Firestore successfully');
+//   } catch (error) {
+//     console.error('Error uploading data to Firestore', error);
+//   }
+// };
 
-// Call the function to start the upload process
+// // Call the function to start the upload process
 
 
 export default firebase

@@ -54,15 +54,16 @@ export default function Home() {
                 myDestinations.length !== 0 ?
                     <ScrollView style={styles.cardcontainer}>
                         {myDestinations?.map((item, index) => (
-                            <Card data={item}/>
+                            <Card data={item} key={index}/>
                         ))}
                     </ScrollView>
                     :
                     <View style={styles.emptylist}>
+
+                        <FontAwesome name="home" size={200} color="grey" />
                         <Text style={styles.emptylist}>
                             Nothing in Your Bucket list!
                         </Text>
-                        <FontAwesome name="home" size={200} color="grey" />
 
                     </View>
             }

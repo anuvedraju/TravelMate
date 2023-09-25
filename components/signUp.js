@@ -46,36 +46,6 @@ export default function Signup() {
             }
           
           
-
-
-    
-    //   const userRef = firebase.firestore().collection('users');
-    //   userRef.add({
-    //     uid,
-    //     displayName,
-    //     email
-    //   })
-    //   .then((docRef) => {
-    //     console.log('User added to Firestore with ID: ', docRef.id);
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error adding trip to Firestore: ', error);
-    //   });
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
     const registerUser = () => {
         if (state.email === '' && state.password === '') {
             Alert.alert('Enter details to signup!')

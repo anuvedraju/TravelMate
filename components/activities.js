@@ -43,8 +43,9 @@ export default function Activities() {
         <View style={styles.container}>
              {addTaskModalVisible ? <AddTasks setAddTaskModalVisible={setAddTaskModalVisible} addTaskModalVisible={addTaskModalVisible} destinationId={currentDestination.destinationId} myTasks={myTasks} setMyTasks={setMyTasks}/> : <View />}
              
-             <Text style={styles.title}>{currentDestination?.name}</Text>
+
             <View style={styles.detailscontainer}>
+                             <Text style={styles.title}>{currentDestination?.name}</Text>
                 <View style={styles.row}>
                     <Text style={styles.label}>Trip Name:</Text>
                     <Text style={styles.text}>{currentDestination?.name}</Text>
@@ -86,8 +87,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         //   justifyContent: 'center',
-        marginTop: 10,
+        // marginTop: 10,
         alignItems: 'center',
+        // position:'relative'
 
 
     },
