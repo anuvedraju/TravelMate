@@ -3,21 +3,13 @@ import * as SQLite from 'expo-sqlite';
 import "firebase/compat/firestore";
 import firebase from "./firebase"
 
-
-
-
-
-// Initialize Cloud Firestore and get a reference to the service
-
-
-
 export async function syncDataToFirestore(data) {
 
     try {
 
 
-        
-         const dbfs = firebase.firestore();
+
+        const dbfs = firebase.firestore();
 
         const collectionRefUsers = dbfs.collection('users');
 

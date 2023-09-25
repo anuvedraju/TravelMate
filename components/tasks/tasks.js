@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native'
 import Checkbox from 'expo-checkbox';
 import React, { useState } from 'react'
-import { updateTask } from '../database/Sqlite';
+import { updateTask } from '../../database/Sqlite';
 
 export default function Task(props) {
   const { data } = props

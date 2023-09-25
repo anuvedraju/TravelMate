@@ -3,10 +3,10 @@ import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 import { createStackNavigator } from '@react-navigation/stack';
-import Signup from './signUp';
-import Login from './login';
+import Signup from './users/signUp';
+import Login from './users/login';
 import Home from './home';
-import Activities from './activities'
+import Activities from './tasks/activities'
 const Stack = createStackNavigator();
 function MyStack() {
     return (

@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
-import * as Actions from "../database/store/actions"
+import * as Actions from "../../database/store/actions"
 const Card = (props) => {
     const{data}=props
 
@@ -17,16 +17,7 @@ const handleSelectDestinations=(data)=>{
     navigation.navigate('Activities')
 
 }
-
-
-
-
-
-
-
-
-
-    
+  
   return (
     <View style={styles.card}>
         <TouchableOpacity onPress={()=>handleSelectDestinations(data)}>

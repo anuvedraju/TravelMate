@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Ionicons, FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import AddTasks from './addTasks';
-import { CreateTasks, getTasks } from '../database/Sqlite';
+import { CreateTasks, getTasks } from '../../database/Sqlite';
 import Task from './tasks';
 
 export default function Activities() {
@@ -43,9 +43,9 @@ export default function Activities() {
         <View style={styles.container}>
              {addTaskModalVisible ? <AddTasks setAddTaskModalVisible={setAddTaskModalVisible} addTaskModalVisible={addTaskModalVisible} destinationId={currentDestination.destinationId} myTasks={myTasks} setMyTasks={setMyTasks}/> : <View />}
              
-
+             <Text style={styles.title}>{currentDestination?.name}</Text>
             <View style={styles.detailscontainer}>
-                             <Text style={styles.title}>{currentDestination?.name}</Text>
+                            
                 <View style={styles.row}>
                     <Text style={styles.label}>Trip Name:</Text>
                     <Text style={styles.text}>{currentDestination?.name}</Text>

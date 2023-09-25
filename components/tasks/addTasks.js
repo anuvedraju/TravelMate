@@ -3,10 +3,9 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import * as SQLite from 'expo-sqlite';
 import { Utils } from '@react-native-firebase/app';
-import { CreateTasks, InsertTasks } from '../database/Sqlite';
+import { CreateTasks, InsertTasks } from '../../database/Sqlite';
 import { Ionicons, FontAwesome, MaterialIcons } from '@expo/vector-icons';
 
-// import db from '../database/Sqllite';
 
 export default function AddTasks(props) {
 
@@ -32,9 +31,6 @@ export default function AddTasks(props) {
     const handleCreateTask = () => {
 
         console.log("loggedInUser", loggedInUser, taskData)
-        // Inserting task associated with userId 1234
-
-
 
         console.log("WORKINGx",destinationId)
         setAddTaskModalVisible(false)
@@ -133,8 +129,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: 'center',
         elevation: 5,
-        width: 300, // Set width to increase modal size
-        height: 300, // Set height to increase modal size
+        width: 300,
+        height: 300,
     },
 
     modalText: {

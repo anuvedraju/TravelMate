@@ -1,78 +1,57 @@
-// components/signup.js
+// components/login.js
 import React, { Component, useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
-import firebase from '../database/firebase';
-import * as SQLite from 'expo-sqlite';
-import 'firebase/firestore';
+import firebase from '../../database/firebase';
+import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import * as Actions from "../database/store/actions"
-import { InsertUser, createUsers, dropTables } from '../database/Sqlite';
+import * as Actions from "../../database/store/actions"
+import { CreateDestinations } from '../../database/Sqlite';
 
-export default function Signup() {
+export default function Login() {
 
-    const navigation = useNavigation();
-    
-    // navigation.navigate('Home')
+
+    const dispatch = useDispatch()
     const [state, setState] = useState({
-        displayName: '',
         email: '',
         password: '',
         isLoading: false
     });
+    const navigation = useNavigation();
 
-
-
-    const updateInputVal = (val, id) => {
-
+    updateInputVal = (val, id) => {
         const statex = { ...state };
         statex[id] = val;
         setState(statex);
     }
 
-
-    
-
-        const handleCreateUser = (user) => {
-
-
-          createUsers()
-          InsertUser(user)
-          
-
-          
+    useEffect(() => {
+        CreateDestinations()
+    }, [])
 
 
-            }
-          
-          
-    const registerUser = () => {
+    const userLogin = () => {
         if (state.email === '' && state.password === '') {
-            Alert.alert('Enter details to signup!')
+            Alert.alert('Enter details to signin!')
         } else {
             setState({
                 isLoading: true,
             })
+
             firebase.auth()
-                .createUserWithEmailAndPassword(state.email, state.password)
+                .signInWithEmailAndPassword(state.email, state.password)
                 .then((res) => {
-                    console.log(res, "response")
-                    res?.user.updateProfile({
-                        displayName: state.displayName
-                    })
-                    console.log('User registered successfullyx!',res)
-                    
+                    console.log(res)
+                    console.log('User logged-in successfully!')
 
-                    handleCreateUser(res.user)
+                    dispatch(Actions.setCurrentUser(res.user))
 
-                    // syncData(res)
                     setState({
                         isLoading: false,
-                        displayName: '',
                         email: '',
                         password: ''
                     })
-                    navigation.navigate('Login')
+                    navigation.navigate('Home')
+
                 })
                 .catch(error => setState({ errorMessage: error.message }))
         }
@@ -82,12 +61,6 @@ export default function Signup() {
         <View style={styles.container}>
             <TextInput
                 style={styles.inputStyle}
-                placeholder="Name"
-                value={state.displayName}
-                onChangeText={(val) => updateInputVal(val, 'displayName')}
-            />
-            <TextInput
-                style={styles.inputStyle}
                 placeholder="Email"
                 value={state.email}
                 onChangeText={(val) => updateInputVal(val, 'email')}
@@ -95,21 +68,21 @@ export default function Signup() {
             <TextInput
                 style={styles.inputStyle}
                 placeholder="Password"
-                value={state?.password}
+                value={state.password}
                 onChangeText={(val) => updateInputVal(val, 'password')}
                 maxLength={15}
                 secureTextEntry={true}
             />
             <Button
                 color="#00c7eb"
-                title="Signup"
-                onPress={() => registerUser()}
+                title="Signin"
+                onPress={() => userLogin()}
             />
-
             <Text
                 style={styles.loginText}
-                onPress={() => navigation.navigate('Login')}>
-                Already Registered ?<Text style={{fontWeight:'bold'}}> Click here to login</Text>
+                onPress={() => navigation.navigate('Signup')}>
+                Don't have account ?<Text style={{ fontWeight: 'bold' }}> Click here to signup</Text>
+
             </Text>
         </View>
     )
@@ -135,7 +108,7 @@ const styles = StyleSheet.create({
     },
     loginText: {
         color: 'grey',
-        marginTop: 50,
+        marginTop: 25,
         textAlign: 'center'
     },
     preloader: {

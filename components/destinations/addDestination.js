@@ -3,11 +3,10 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import * as SQLite from 'expo-sqlite';
 import { Utils } from '@react-native-firebase/app';
-import { CreateDestinations, InsertDestinations } from '../database/Sqlite';
+import { CreateDestinations, InsertDestinations } from '../../database/Sqlite';
 import { Ionicons, FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import DatePicker from "expo-datepicker";
 
-// import db from '../database/Sqllite';
 
 export default function AddDestination(props) {
 
@@ -30,7 +29,6 @@ export default function AddDestination(props) {
     const handleCreateTrip = () => {
 
         console.log("loggedInUser", loggedInUser, destinationData)
-        // Inserting destination associated with userId 1234
 
 
 
