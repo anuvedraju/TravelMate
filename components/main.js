@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Signup from './signUp';
 import Login from './login';
 import Home from './home';
+import Activities from './activities'
 const Stack = createStackNavigator();
 function MyStack() {
     return (
@@ -14,7 +15,7 @@ function MyStack() {
             screenOptions={{
                 headerTitleAlign: 'center',
                 headerStyle: {
-                    backgroundColor: 'red',
+                    backgroundColor: '#00c7eb',
                 },
                 headerTintColor: '#fff',
                 headerTitleStyle: {
@@ -35,6 +36,11 @@ function MyStack() {
             <Stack.Screen
                 name="Home"
                 component={Home}
+
+            />
+            <Stack.Screen
+                name="Activities"
+                component={Activities}
 
             />
 

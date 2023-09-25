@@ -1,10 +1,18 @@
 // components/signup.js
-import React, { Component, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
 import firebase from '../database/firebase';
+import * as SQLite from 'expo-sqlite';
+import 'firebase/firestore';
+import { useDispatch } from 'react-redux';
+import * as Actions from "../database/store/actions"
+import { InsertUser, createUsers, dropTables } from '../database/Sqlite';
+
 export default function Signup() {
 
+    const navigation = useNavigation();
+    // navigation.navigate('Home')
     const [state, setState] = useState({
         displayName: '',
         email: '',
@@ -12,13 +20,59 @@ export default function Signup() {
         isLoading: false
     });
 
-    const navigation = useNavigation();
+
 
     const updateInputVal = (val, id) => {
         const statex = { ...state };
         statex[id] = val;
         setState(statex);
     }
+
+
+    
+
+        const handleCreateUser = (user) => {
+
+
+          createUsers()
+          InsertUser(user)
+          
+
+          
+
+
+            }
+          
+          
+
+
+    
+    //   const userRef = firebase.firestore().collection('users');
+    //   userRef.add({
+    //     uid,
+    //     displayName,
+    //     email
+    //   })
+    //   .then((docRef) => {
+    //     console.log('User added to Firestore with ID: ', docRef.id);
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error adding trip to Firestore: ', error);
+    //   });
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
 
     const registerUser = () => {
         if (state.email === '' && state.password === '') {
@@ -31,10 +85,15 @@ export default function Signup() {
                 .createUserWithEmailAndPassword(state.email, state.password)
                 .then((res) => {
                     console.log(res, "response")
-                    res.user.updateProfile({
+                    res?.user.updateProfile({
                         displayName: state.displayName
                     })
-                    console.log('User registered successfully!')
+                    console.log('User registered successfullyx!',res)
+                    
+
+                    handleCreateUser(res.user)
+
+                    // syncData(res)
                     setState({
                         isLoading: false,
                         displayName: '',
@@ -70,14 +129,15 @@ export default function Signup() {
                 secureTextEntry={true}
             />
             <Button
-                color="#3740FE"
+                color="#00c7eb"
                 title="Signup"
                 onPress={() => registerUser()}
             />
+
             <Text
                 style={styles.loginText}
                 onPress={() => navigation.navigate('Login')}>
-                Already Registered? Click here to login
+                Already Registered ?<Text style={{fontWeight:'bold'}}> Click here to login</Text>
             </Text>
         </View>
     )
@@ -102,7 +162,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1
     },
     loginText: {
-        color: '#3740FE',
+        color: 'grey',
         marginTop: 50,
         textAlign: 'center'
     },

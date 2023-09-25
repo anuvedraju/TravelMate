@@ -1,11 +1,16 @@
 // components/login.js
-import React, { Component, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
 import firebase from '../database/firebase';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import * as Actions from "../database/store/actions"
+import { CreateDestinations } from '../database/Sqlite';
 
 export default function Login() {
 
+
+    const dispatch = useDispatch()
     const [state, setState] = useState({
         email: '',
         password: '',
@@ -18,6 +23,12 @@ export default function Login() {
         statex[id] = val;
         setState(statex);
     }
+
+    useEffect(() => {
+        CreateDestinations()
+    }, [])
+
+
     const userLogin = () => {
         if (state.email === '' && state.password === '') {
             Alert.alert('Enter details to signin!')
@@ -31,12 +42,16 @@ export default function Login() {
                 .then((res) => {
                     console.log(res)
                     console.log('User logged-in successfully!')
+
+                    dispatch(Actions.setCurrentUser(res.user))
+
                     setState({
                         isLoading: false,
                         email: '',
                         password: ''
                     })
                     navigation.navigate('Home')
+
                 })
                 .catch(error => setState({ errorMessage: error.message }))
         }
@@ -59,14 +74,15 @@ export default function Login() {
                 secureTextEntry={true}
             />
             <Button
-                color="#3740FE"
+                color="#00c7eb"
                 title="Signin"
                 onPress={() => userLogin()}
             />
             <Text
                 style={styles.loginText}
                 onPress={() => navigation.navigate('Signup')}>
-                Don't have account? Click here to signup
+                Don't have account ?<Text style={{ fontWeight: 'bold' }}> Click here to signup</Text>
+
             </Text>
         </View>
     )
@@ -91,7 +107,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1
     },
     loginText: {
-        color: '#3740FE',
+        color: 'grey',
         marginTop: 25,
         textAlign: 'center'
     },
