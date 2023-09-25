@@ -10,7 +10,7 @@ import { Ionicons, FontAwesome, MaterialIcons } from '@expo/vector-icons';
 
 export default function AddTasks(props) {
 
-    const { setAddTaskModalVisible, addTaskModalVisible,destinationId } = props
+    const { setAddTaskModalVisible, addTaskModalVisible,destinationId,myTasks, setMyTasks } = props
 
     const [taskData, setTaskData] = useState({
         taskName: '',
@@ -40,6 +40,11 @@ export default function AddTasks(props) {
         setAddTaskModalVisible(false)
         CreateTasks()
         InsertTasks(taskData, destinationId)
+
+        const statex = [...myTasks]
+        statex.push(taskData)
+        console.log("statex",statex)
+        setMyTasks(statex)
 
     };
 
@@ -72,13 +77,13 @@ export default function AddTasks(props) {
                                 onChangeText={(val) => updateInputVal(val, "taskName")}
                             />
                             <TextInput
-                                placeholder="Start Date (YYYY-MM-DD)"
+                                placeholder="Date"
                                 style={styles.textInput}
                                 value={taskData.date}
                                 onChangeText={(val) => updateInputVal(val, "date")}
                             />
                             <TextInput
-                                placeholder="End Date (YYYY-MM-DD)"
+                                placeholder="Time"
                                 style={styles.textInput}
                                 value={taskData.time}
                                 onChangeText={(val) => updateInputVal(val, "time")}

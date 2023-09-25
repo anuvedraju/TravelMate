@@ -18,21 +18,16 @@ export default function Activities() {
         console.log("currentDestination",currentDestination)
 
 
-        getTasks(currentDestination.destinationId)
+        getTasks(currentDestination?.destinationId)
             .then(tasks => {
-                console.log('Tasks:', tasks);
+                // console.log('Tasks:', tasks);
                 setMyTasks(tasks)
             })
             .catch(error => {
                 console.error('Error fetching destinations:', error);
             });
 
-
     }, [])
-
-
-
-
 
 
 
@@ -46,7 +41,7 @@ export default function Activities() {
     }
     return (
         <View style={styles.container}>
-             {addTaskModalVisible ? <AddTasks setAddTaskModalVisible={setAddTaskModalVisible} addTaskModalVisible={addTaskModalVisible} destinationId={currentDestination.destinationId} /> : <View />}
+             {addTaskModalVisible ? <AddTasks setAddTaskModalVisible={setAddTaskModalVisible} addTaskModalVisible={addTaskModalVisible} destinationId={currentDestination.destinationId} myTasks={myTasks} setMyTasks={setMyTasks}/> : <View />}
              
              <Text style={styles.title}>{currentDestination?.name}</Text>
             <View style={styles.detailscontainer}>
@@ -68,22 +63,21 @@ export default function Activities() {
                 </View>
                 <View style={styles.row}>
                     <TouchableOpacity style={styles.addButton} onPress={() => handleAddActivity()}>
-                        <Text style={styles.buttonText}>Add Activity</Text>
+                        <Text style={styles.buttonText}>Add Task</Text>
                     </TouchableOpacity>
                 </View>
             </View>
             <Text style={styles.subtitle}>Tasks</Text>
-            <View style={styles.detailscontainer}>
             {
                 myTasks?.length !== 0 ?
                     <ScrollView style={styles.taskContainer}>
                         {myTasks?.map((item, index) => (
-                            <Task data={item}/>
+                            <Task key={index} data={item} myTasks={myTasks} setMyTasks={setMyTasks} />
                         ))}
                     </ScrollView>
                     :<View/>
             }
-                </View>
+              
         </View>
 
     )
@@ -94,13 +88,29 @@ const styles = StyleSheet.create({
         //   justifyContent: 'center',
         marginTop: 10,
         alignItems: 'center',
+
+
+    },
+    taskContainer:{
+        width:"95%",
+        overflowY:"auto",
+        marginTop:4,
+        marginBottom:10,
+        // maxHeight:"40%",
+        padding: 10,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 8,
+        backgroundColor:"#ffff"
     },
     detailscontainer: {
         padding: 10,
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 8,
-        width: 300, // Adjust width as needed
+        width:"95%",
+        height:"28%",
+        backgroundColor:"#ffff"
     },
     row: {
         flexDirection: 'row',

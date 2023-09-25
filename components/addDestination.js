@@ -5,19 +5,20 @@ import * as SQLite from 'expo-sqlite';
 import { Utils } from '@react-native-firebase/app';
 import { CreateDestinations, InsertDestinations } from '../database/Sqlite';
 import { Ionicons, FontAwesome, MaterialIcons } from '@expo/vector-icons';
+import DatePicker from "expo-datepicker";
 
 // import db from '../database/Sqllite';
 
 export default function AddDestination(props) {
 
-    const { setAddModalVisible, addModalVisible } = props
+    const { setAddModalVisible, addModalVisible,setMyDestinations,myDestinations } = props
     const [destinationData, setDestinationData] = useState({
-        tripName: '',
-        destination: '',
+        name: '',
+        destinationName: '',
         startDate: '',
         endDate: ''
     });
-
+    const [date, setDate] = useState(new Date().toString());
     const updateInputVal = (val, id) => {
         const statex = { ...destinationData };
         statex[id] = val;
@@ -38,13 +39,21 @@ export default function AddDestination(props) {
         CreateDestinations()
         InsertDestinations(destinationData, loggedInUser)
 
+        const statex = [...myDestinations]
+        statex.push(destinationData)
+        console.log("statex",statex)
+        setMyDestinations(statex)
+
+
     };
 
     return (
         <View style={styles.container}>
 
 
-            <Modal
+
+                <View style={styles.container}>
+                <Modal
                 animationType="slide"
                 transparent={true}
                 style={styles.modal}
@@ -53,46 +62,55 @@ export default function AddDestination(props) {
                     setAddModalVisible(!addModalVisible);
                 }}
             >
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
+                        <View style={styles.modalContainer}>
+                            <View style={styles.modalContent}>
+                                <TouchableOpacity onPress={() => setAddModalVisible(false)} style={styles.closeButton}>
+                                    <FontAwesome name="close" size={18} color="#00c7eb" />
+                                </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => setAddModalVisible(false)} style={styles.closeButton}>
-                            <FontAwesome name="close" size={18} color="#00c7eb" />
-                        </TouchableOpacity>
-                        <View style={styles.inputContainer}>
-                            <TextInput
-                                placeholder="Trip Name"
-                                style={styles.textInput}
-                                value={destinationData.tripName}
-                                onChangeText={(val) => updateInputVal(val, "tripName")}
-                            />
+                                <View style={styles.inputContainer}>
+                                    <TextInput
+                                        placeholder="Trip Name"
+                                        style={styles.textInput}
+                                        value={destinationData.tripName}
+                                        onChangeText={(val) => updateInputVal(val, "name")}
+                                    />
+                                    <TextInput
+                                        placeholder="Destination"
+                                        style={styles.textInput}
+                                        value={destinationData.destination}
+                                        onChangeText={(val) => updateInputVal(val, "destinationName")}
+                                    />
 
-                            <TextInput
-                                placeholder="Destination"
-                                style={styles.textInput}
-                                value={destinationData.destination}
-                                onChangeText={(val) => updateInputVal(val, "destination")}
-                            />
-                            <TextInput
-                                placeholder="Start Date (YYYY-MM-DD)"
-                                style={styles.textInput}
-                                value={destinationData.startDate}
-                                onChangeText={(val) => updateInputVal(val, "startDate")}
-                            />
-                            <TextInput
-                                placeholder="End Date (YYYY-MM-DD)"
-                                style={styles.textInput}
-                                value={destinationData.endDate}
-                                onChangeText={(val) => updateInputVal(val, "endDate")}
-                            />
-                            <TouchableOpacity name="Create Trip" onPress={handleCreateTrip} style={styles.createTrip} ><Text style={styles.createButtontext}  >create</Text></TouchableOpacity>
+                                    <Text style={styles.label}>Start Date</Text>
+                                    <View style={styles.datePicker}>
+                                        <DatePicker
+                                            date={destinationData.startDate}
+                                            containerStyle={styles.startdateandtimepicker}
+                                            onChange={(val) => updateInputVal(val, "startDate")}
+                                        />
+                                    </View>
+
+                                    <Text style={styles.label}>End Date</Text>
+                                    <View style={styles.datePicker}>
+                                        <DatePicker
+                                            date={destinationData.endDate}
+                                            containerStyle={styles.endtdateandtimepicker}
+                                            onChange={(val) => updateInputVal(val, "endDate")}
+                                        />
+                                    </View>
+
+                                    <View style={styles.buttonContainer}>
+                                        <TouchableOpacity name="Create Trip" onPress={handleCreateTrip} style={styles.createTrip}>
+                                            <Text style={styles.createButtontext}>Create</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View>
                         </View>
-
-
-
-                    </View>
+                    </Modal>
                 </View>
-            </Modal>
+
         </View>
     );
 
@@ -104,59 +122,96 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+
+
+
+    },
+    label: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 8,
     },
     createTrip: {
         borderRadius: 40,
         backgroundColor: "#00c7eb",
         alignItems: 'center',
         padding: 10,
+        color: "white",
+        width: 280,
         marginTop: 20,
-        color: "white"
+        zIndex: 1
+
+
+
     },
     modalContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+
+
     },
     modalContent: {
         backgroundColor: 'white',
-        padding: 20,
         borderRadius: 10,
         alignItems: 'center',
         elevation: 5,
-        width: 300, // Set width to increase modal size
-        height: 300, // Set height to increase modal size
-    },
+        width: 300,
+        height: 450,
 
+    },
+    datePicker: {
+        marginBottom: 20,
+        padding: 28,
+
+        position: 'relative'
+    },
+    startdateandtimepicker: {
+
+        width: 280,
+        position: 'absolute',
+        zIndex: 4,
+
+
+
+    },
+    endtdateandtimepicker: {
+        width: 280,
+        position: 'absolute',
+        zIndex: 2,
+
+
+
+    },
     modalText: {
-        marginBottom: 10,
         fontSize: 16,
         textAlign: 'center',
+
     },
     inputContainer: {
         alignContent: 'center',
-        marginTop: 28,
-        width: 200,
-        height: 200,
-        justifyContent: 'space-around'
+        width: 280,
+        height: 600,
+        marginTop: 50
     },
 
     textInput: {
         width: 400,
-        padding: 10
+        height: 40
     },
     closeButton: {
         backgroundColor: 'transparent',
         padding: 10,
         marginTop: 4,
         right: 4,
-        position: 'absolute'
+        position: 'absolute',
+        zIndex: 4
     },
     closeButtonText: {
         color: 'white',
         fontWeight: 'bold',
         textAlign: 'center',
-    }, 
+    },
     createButtontext: {
         color: "#ffff"
     }

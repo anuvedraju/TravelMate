@@ -48,7 +48,7 @@ export default function Home() {
         <View style={styles.container}>
 
             {/* <Text style={styles.logout}>{loggedInUser.displayName}</Text> */}
-            {addModalVisible ? <AddDestination setAddModalVisible={setAddModalVisible} addModalVisible={addModalVisible} /> : <View/>}
+            {addModalVisible ? <AddDestination setAddModalVisible={setAddModalVisible} addModalVisible={addModalVisible} myDestinations={myDestinations} setMyDestinations={setMyDestinations} /> : <View/>}
 
             {
                 myDestinations.length !== 0 ?
@@ -84,7 +84,7 @@ export default function Home() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#dcdfe4',
+        backgroundColor: '#ffff',
         alignItems: 'center',
         // justifyContent: 'center',
        // backgroundColor:"red"
@@ -112,17 +112,19 @@ const styles = StyleSheet.create({
         right: 4
     },
     emptylist: {
-        color: "black",
+        color: "#dcdfe4",
         fontSize: 28,
         alignContent:"center",
         alignItems:'center'
     },
     addNew: {
-        backgroundColor: "#dcdfe4",
+        backgroundColor: "#ffff",
         bottom: 0,
         position: "absolute",
         width: "100%",
         alignItems: "center",
+        borderTopWidth:1,
+        borderTopColor:"#dcdfe4",
         height: 60,
 
     }

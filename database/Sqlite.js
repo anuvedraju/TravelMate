@@ -89,8 +89,8 @@ export function CreateDestinations(){
       [
   
         
-        destinationData.tripName,
-        destinationData.destination,
+        destinationData.name,
+        destinationData.destinationName,
         destinationData.startDate,
         destinationData.endDate,
         user.email, // Assuming userId 1234 exists
@@ -208,6 +208,7 @@ export function InsertTasks(taskData,destinationId){
     }
     );})
   }
+
   export function getTasks(destinationId){
     return new Promise((resolve, reject) => {
       const db = SQLite.openDatabase('mydb.db');
@@ -226,7 +227,6 @@ export function InsertTasks(taskData,destinationId){
       });
     });
   };
-
 
 export function updateTask(taskId, isCompleted){
   db.transaction(tx => {

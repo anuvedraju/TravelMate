@@ -12,6 +12,7 @@ import { InsertUser, createUsers, dropTables } from '../database/Sqlite';
 export default function Signup() {
 
     const navigation = useNavigation();
+    
     // navigation.navigate('Home')
     const [state, setState] = useState({
         displayName: '',
@@ -23,6 +24,7 @@ export default function Signup() {
 
 
     const updateInputVal = (val, id) => {
+
         const statex = { ...state };
         statex[id] = val;
         setState(statex);

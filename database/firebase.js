@@ -1,6 +1,9 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/database';
+import { getTasks } from './database/SQLite';
+import 'firebase/firestore';
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyBr3s4kKNfBG0XdzCv6uNQj8IjWG937r48",
@@ -12,5 +15,32 @@ const firebaseConfig = {
     measurementId: "G-WESGK4Y11E"
 };
 
-firebase.initializeApp(firebaseConfig);
+
+
+
+
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+
+const db = firebase.firestore();
+
+export async function uploadDataToFirestore (){
+  try {
+    const tasks = await getTasks(); // Get tasks from SQLite
+    const tasksCollectionRef = db.collection('tasks');
+
+    tasks.forEach(task => {
+      tasksCollectionRef.add(task); // Upload each task to Firestore
+    });
+
+    console.log('Data uploaded to Firestore successfully');
+  } catch (error) {
+    console.error('Error uploading data to Firestore', error);
+  }
+};
+
+// Call the function to start the upload process
+
+
 export default firebase

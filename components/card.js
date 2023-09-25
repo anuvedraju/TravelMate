@@ -32,7 +32,7 @@ const handleSelectDestinations=(data)=>{
         <TouchableOpacity onPress={()=>handleSelectDestinations(data)}>
         <Image
         style={styles.image}
-        source={{ uri: 'https://placekitten.com/200/200' }}
+        source={{ uri: 'https://www.imf.org/-/media/Images/IMF/News/news-article-images/2020/CF-570x312-Tourism-Preto-perola-Getty-Images-iStock-1011241694.ashx?mh=304&la=en&h=304&w=556&mw=561' }}
       />
       <View style={styles.cardContent}>
         <Text style={styles.title}>{data.name}</Text>
