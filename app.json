@@ -21,10 +21,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.travelmatex.travelmate"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "owner": "anuved_raju",
+    "extra": {
+      "eas": {
+        "projectId": "4956de17-8056-4610-80ed-6ba75d83da95"
+      }
     }
   }
 }
