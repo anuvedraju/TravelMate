@@ -1,23 +1,25 @@
-import { View, Text, StyleSheet } from 'react-native'
-import Checkbox from 'expo-checkbox';
-import React, { useState } from 'react'
-import { updateTask } from '../../database/Sqlite';
+import { View, Text, StyleSheet } from "react-native";
+import Checkbox from "expo-checkbox";
+import React, { useState } from "react";
+import { updateTask } from "../../database/Sqlite";
 
 export default function Task(props) {
-  const { data } = props
+  const { data, destinationId } = props;
 
   const [isChecked, setChecked] = useState(false);
   const handleCheck = () => {
+    updateTask(data?.taskName, destinationId, 1);
 
-    updateTask(data?.taskId, 1)
-
-    setChecked(true)
-  }
+    setChecked(true);
+  };
   return (
-<View style={[styles.taskCard, {backgroundColor: data.isCompleted ? '#bbefea' : '#ffff'}]}>
-
-      <View style={styles.checkboxContainer}>
-      </View>
+    <View
+      style={[
+        styles.taskCard,
+        { backgroundColor: data.isCompleted ? "#bbefea" : "#ffff" },
+      ]}
+    >
+      <View style={styles.checkboxContainer}></View>
       <View style={styles.textContainer}>
         <Text style={styles.heading}>{data?.taskName}</Text>
         <Text style={styles.description}>{data?.description}</Text>
@@ -25,36 +27,46 @@ export default function Task(props) {
           Date: {data?.date}, Time: {data?.time}
         </Text>
       </View>
-      {!data.isCompleted?<Checkbox style={styles.checkbox} value={isChecked} onValueChange={() => handleCheck()} />:<View style={styles.bookmark}><Text style={styles.bookmarktext}>Done</Text></View>}
+      {!data.isCompleted ? (
+        <Checkbox
+          style={styles.checkbox}
+          value={isChecked}
+          onValueChange={() => handleCheck()}
+        />
+      ) : (
+        <View style={styles.bookmark}>
+          <Text style={styles.bookmarktext}>Done</Text>
+        </View>
+      )}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   taskCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderWidth: 0.5,
-    borderColor: '#ccc',
-    borderRadius:8,
+    borderColor: "#ccc",
+    borderRadius: 8,
     padding: 10,
-    marginBottom:14,
-    position:'relative'
+    marginBottom: 14,
+    position: "relative",
     // backgroundColor:"#ffff"
   },
   bookmark: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     right: 0,
     width: 40,
     height: 20,
-    borderRadius:2,
-    backgroundColor: "#40ad79", /* Bookmark color */
-    transform: [{ rotate: '0deg' }],
-    alignItems:'center'
+    borderRadius: 2,
+    backgroundColor: "#40ad79" /* Bookmark color */,
+    transform: [{ rotate: "0deg" }],
+    alignItems: "center",
   },
-  bookmarktext:{
-    color:"#ffff"
+  bookmarktext: {
+    color: "#ffff",
   },
   checkboxContainer: {
     marginRight: 10,
@@ -64,7 +76,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 8,
   },
   description: {
@@ -73,6 +85,6 @@ const styles = StyleSheet.create({
   },
   dateTime: {
     fontSize: 14,
-    color: '#666',
+    color: "#666",
   },
 });

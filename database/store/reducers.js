@@ -1,8 +1,8 @@
-import * as ACTIONS from "./actions"
+import * as ACTIONS from "./actions";
 
 const initialState = {
   currentUser: {},
-  currentDestination:{}
+  currentDestination: {},
 };
 
 const someReducer = (state = initialState, action) => {
@@ -12,11 +12,11 @@ const someReducer = (state = initialState, action) => {
         ...state,
         currentUser: action.payload,
       };
-      case ACTIONS.SET_CURRENT_DESTINATION:
-        return{
-          ...state,
-          currentDestination:action.payload
-        }
+    case ACTIONS.SET_CURRENT_DESTINATION:
+      return {
+        ...state,
+        currentDestination: action.payload,
+      };
     default:
       return state;
   }

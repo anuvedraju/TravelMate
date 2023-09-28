@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { View, Text, Modal, TouchableOpacity } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import React, { useState } from "react";
+import { View, Text, Modal, TouchableOpacity } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function Modal() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -10,7 +10,7 @@ export default function Modal() {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <TouchableOpacity onPress={toggleModal}>
         <Text>Show Popup Menu</Text>
       </TouchableOpacity>
@@ -23,8 +23,12 @@ export default function Modal() {
           setModalVisible(!modalVisible);
         }}
       >
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <View
+            style={{ backgroundColor: "white", padding: 20, borderRadius: 10 }}
+          >
             <Text>Popup Menu Content</Text>
             <TouchableOpacity onPress={toggleModal}>
               <Text>Close</Text>
